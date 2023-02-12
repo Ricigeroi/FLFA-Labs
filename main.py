@@ -1,16 +1,21 @@
-# This is a sample Python script.
+from Grammar import Grammar
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+if __name__ == "__main__":
+    Vn = ["S", "D", "R"]
+    Vt = ["a", "b", "c", "d", "f"]
+    P = {
+        "S": ["aS", "bD", "fR"],
+        "D": ["cD", "dR", "d"],
+        "R": ["bR", "f"]
+    }
 
+    S = "S"
+    grammar = Grammar(Vn, Vt, P, S)
+    finite_automaton = grammar.to_finite_automaton()
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    print("__________Generated strings___________")
+    for i in range(5):
+        string = grammar.generate_string()
+        print("Parsing:", finite_automaton.string_belongs_to_language(string))
+    print("=================================================")
+    print(finite_automaton.string_belongs_to_language("bccccdf"))
