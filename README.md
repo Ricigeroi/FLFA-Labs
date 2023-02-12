@@ -112,6 +112,7 @@ In conclusion, regular grammars and finite automatons are important concepts in 
 In this lab, the students were tasked with implementing a type/class for their given grammar, generating 5 valid strings from the language expressed by their given grammar, converting an object of type Grammar to an object of type Finite Automaton, and checking if an input string can be obtained via the state transition from the finite automaton. This lab serves as the initial setup for the evolving project that the students will work on throughout the semester.
 
 The implementation of regular grammars and finite automatons in Python highlights the versatility and power of these concepts in computer science. With the ability to perform various operations and tasks related to string manipulation, regular grammars and finite automatons are an indispensable tool for computer scientists and programmers alike.
+![FA](https://user-images.githubusercontent.com/90408983/218338895-e56ed245-1552-4ba2-a473-db6b1cfc694f.png)
 
 
 ## References
