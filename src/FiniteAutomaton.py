@@ -11,8 +11,9 @@ class FiniteAutomaton:
         for index in range(0, len(input_string)):
             if (current_state, input_string[index]) in self.delta:
                 next_states = self.delta[(current_state, input_string[index])]
+                # Case for last symbol in string (trying to find final state in last transition)
                 if len(next_states) > 1 and index == len(input_string) - 1:
-                    current_state = next_states[1]
+                    current_state = next_states[next_states.index('F')]
                 else:
                     current_state = next_states[0]
             else:

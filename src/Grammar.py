@@ -15,11 +15,13 @@ class Grammar:
             print(actual_string, end='')
             new_string = ""
             for symbol in actual_string:
+                # Generate string choosing random production
                 if symbol in self.non_terminal_vars:
                     new_string += random.choice(self.production[symbol])
                     print(" -> ", end='')
                 else:
                     new_string += symbol
+            # while exit point
             if new_string == actual_string:
                 break
             actual_string = new_string
@@ -33,17 +35,27 @@ class Grammar:
         initial_state = self.start_symbol
         final_states = ['F']
 
+        for element in final_states:
+            states.add(element)
+
         for non_terminal in self.non_terminal_vars:
             states.add(non_terminal)
             for production in self.production[non_terminal]:
                 for symbol in production:
                     if symbol in self.terminal_vars:
+                        # Case for multiple transitions from certain state
                         if (non_terminal, symbol) in transition:
-                            transition[(non_terminal, symbol)].append('F')
-                        elif production.islower():
+                            if production in self.terminal_vars:
+                                transition[(non_terminal, symbol)].append('F')
+                            else:
+                                transition[(non_terminal, symbol)].append(production[1:])
+                        # General case
+                        elif production in self.terminal_vars:
                             transition[(non_terminal, symbol)] = ['F']
                         else:
                             transition[(non_terminal, symbol)] = [production[1:]]
+        print("_______________States________________")
+        print(states)
         print("____________Transitions______________")
         for item in transition:
             print(item, "->", transition[item])
