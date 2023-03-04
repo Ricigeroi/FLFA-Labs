@@ -2,6 +2,19 @@ import random
 from FiniteAutomaton import FiniteAutomaton
 
 
+def count_case_changes(s):
+    count = 0
+    previous_case = None
+    for char in s:
+        current_case = char.isupper()
+        if previous_case is not None and current_case != previous_case:
+            count += 1
+        previous_case = current_case
+    return count
+
+
+
+
 class Grammar:
     def __init__(self, non_terminal_vars, terminal_vars, production, start_symbol):
         self.non_terminal_vars = non_terminal_vars
@@ -59,4 +72,25 @@ class Grammar:
         print("____________Transitions______________")
         for item in transition:
             print(item, "->", transition[item])
+
+        print(transition)
         return FiniteAutomaton(states, alphabet, transition, initial_state, final_states)
+
+    def chomsky(self):
+        flag = [0, 0, 0, 0]
+        for rule in self.production:
+            for prod in self.production[rule]:
+                if len(rule) == 1:
+                    if count_case_changes(prod) <= 1 and not prod.istitle():
+                        if sum(1 for c in prod if c in self.non_terminal_vars) <= 1:
+                            flag[3] = 1
+                        else:
+                            flag[3] = 0
+                    else:
+                        flag[2] = 1
+                else:
+                    if '$' not in prod:
+                        flag[1] = 1
+                    else:
+                        flag[0] = 1
+        return "Type " + str(flag.index(1))
