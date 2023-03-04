@@ -72,8 +72,6 @@ class Grammar:
         print("____________Transitions______________")
         for item in transition:
             print(item, "->", transition[item])
-
-        print(transition)
         return FiniteAutomaton(states, alphabet, transition, initial_state, final_states)
 
     def chomsky(self):
