@@ -1,3 +1,4 @@
+
 class FiniteAutomaton:
     def __init__(self, Q, Sigma, delta, q0, F):
         self.Q = Q
@@ -23,7 +24,7 @@ class FiniteAutomaton:
     def to_grammar(self):
         non_terminal_vars = list(self.Q)
         terminal_vars = list(self.Sigma)
-        production = None
+        production = {}
         start_symbol = self.q0
 
         keys = []
@@ -31,20 +32,37 @@ class FiniteAutomaton:
 
         for key in self.delta:
             keys.append(key[0])
-            values.append(key[1] + self.delta[key][0])
+
+            if len(self.delta[key]) > 1:
+                l = []
+                for i in range(len(self.delta[key])):
+                    l.append(key[1] + self.delta[key][i])
+                values.append(l)
+            else:
+                values.append(key[1] + self.delta[key][0])
 
         production = dict.fromkeys(keys, list())
 
         for i in range(len(keys)):
             if len(production[keys[i]]) == 0:
-                production[keys[i]] = [values[i]]
+                if type(values[i]) == list:
+                    production[keys[i]] = values[i]
+                else:
+                    production[keys[i]] = [values[i]]
             else:
                 production[keys[i]].append(values[i])
 
         return non_terminal_vars, terminal_vars, production, start_symbol
 
 
+    def type_automaton(self):
+        for item in self.delta.values():
+            if len(item) > 1:
+                return 'NFA'
+        return 'DFA'
 
+    def nfa_to_dfa(self):
+        pass
 
 
 
