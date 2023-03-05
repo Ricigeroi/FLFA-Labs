@@ -29,8 +29,9 @@ if __name__ == "__main__":
     final_states = ['q4']
 
     grammar = Grammar(Vn, Vt, P, S)
-
     print(grammar.to_finite_automaton())
+    print(grammar.chomsky())
 
     automaton = FiniteAutomaton(Q, alphabet, transition, initial_state, final_states)
+
     print(automaton.to_grammar())

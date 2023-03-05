@@ -13,8 +13,6 @@ def count_case_changes(s):
     return count
 
 
-
-
 class Grammar:
     def __init__(self, non_terminal_vars, terminal_vars, production, start_symbol):
         self.non_terminal_vars = non_terminal_vars
