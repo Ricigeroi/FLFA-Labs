@@ -1,16 +1,5 @@
 import random
-from FiniteAutomaton import FiniteAutomaton
-
-
-def count_case_changes(s):
-    count = 0
-    previous_case = None
-    for char in s:
-        current_case = char.isupper()
-        if previous_case is not None and current_case != previous_case:
-            count += 1
-        previous_case = current_case
-    return count
+from D_FiniteAutomaton import D_FiniteAutomaton
 
 
 class Grammar:
@@ -54,7 +43,7 @@ class Grammar:
             for production in self.production[non_terminal]:
                 for symbol in production:
                     if symbol in self.terminal_vars:
-                        # Case for multiple transitions from certain state
+                        # Case for multiple delta from certain state
                         if (non_terminal, symbol) in transition:
                             if production in self.terminal_vars:
                                 transition[(non_terminal, symbol)].append('F')
@@ -70,7 +59,7 @@ class Grammar:
         print("____________Transitions______________")
         for item in transition:
             print(item, "->", transition[item])
-        return FiniteAutomaton(states, alphabet, transition, initial_state, final_states)
+        return D_FiniteAutomaton(states, alphabet, transition, initial_state, final_states)
 
     def chomsky(self):
         flag = [0, 0, 0, 0]
@@ -90,3 +79,13 @@ class Grammar:
                     else:
                         flag[0] = 1
         return "Type " + str(flag.index(1))
+
+def count_case_changes(s):
+    count = 0
+    previous_case = None
+    for char in s:
+        current_case = char.isupper()
+        if previous_case is not None and current_case != previous_case:
+            count += 1
+        previous_case = current_case
+    return count

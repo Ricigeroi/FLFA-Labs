@@ -1,5 +1,5 @@
 from Grammar import Grammar
-from FiniteAutomaton import FiniteAutomaton
+from N_FiniteAutomaton import N_FiniteAutomaton
 
 
 if __name__ == "__main__":
@@ -27,21 +27,42 @@ if __name__ == "__main__":
     initial_state = 'q0'
     final_states = ['q4']
 
+    print()
+    print()
+
     # Lab 1
     grammar = Grammar(Vn, Vt, P, S)
     # print(grammar.to_finite_automaton())
+    ####################################################################################################################
+    # LAB 2 STARTS HERE
+    #
+    #
+    # Grammar classification
+    print("Grammar classification by Chomsky:", grammar.chomsky())
+    print()
 
-    # Lab 2
-    print(grammar.chomsky())
+    # Creating of the new NFA
+    automaton = N_FiniteAutomaton(Q, alphabet, initial_state, transition, final_states)
 
-    automaton = FiniteAutomaton(Q, alphabet, transition, initial_state, final_states)
+    # Convert NFA to grammar
+    new_grammar = automaton.to_grammar()
 
-    x = automaton.to_grammar()
-    print('Vn =', x[0])
-    print('Vt =', x[1])
-    print('P =', x[2])
-    print('S =', x[3])
+    print('________Automata to grammar________')
+    print("Type of the automaton is", automaton.type_automaton())
+    print('Vn =', new_grammar.non_terminal_vars)
+    print('Vt =', new_grammar.terminal_vars)
+    print('P =', new_grammar.production)
+    print('S =', new_grammar.start_symbol)
 
-    print(automaton.type_automaton())
+    # NFA to DFA conversion
+    dfa = automaton.nfa2dfa()
+    print('________NFA to DFA conversion________')
+    print("Type of the automaton is", dfa.type_automaton())
+    print('Q =', dfa.Q)
+    print('Sigma =', dfa.Sigma)
+    print('Delta =', dfa.delta)
+    print('q0 =', dfa.q0)
+    print('___________________________________')
+
 
 
