@@ -38,7 +38,7 @@ class D_FiniteAutomaton:
         return Grammar(self.Q, self.Sigma, production, self.q0)
 
     def type_automaton(self):
-        for item in self.delta.values():
+        for item in self.delta:
             if len(item) > 1:
                 return 'NFA'
         return 'DFA'

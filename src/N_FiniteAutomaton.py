@@ -1,7 +1,6 @@
 from D_FiniteAutomaton import D_FiniteAutomaton
 from Grammar import Grammar
-import networkx as nx
-import matplotlib.pyplot as plt
+from graphviz import Digraph
 
 
 class N_FiniteAutomaton:
@@ -52,34 +51,47 @@ class N_FiniteAutomaton:
         dfa_Q = [[self.q0]]
 
         for states in dfa_Q:
-            for s in states:
+            for s in self.Sigma:
                 new_states = []
-                T_states = []
-                for c in self.Sigma:
-                    if (s, c) in self.delta.keys():
-                        new_states.append(self.delta[(s, c)])
-                        T_states.append(c)
-                for ns in new_states:
-                    if ns and ns not in dfa_Q:
-                        dfa_Q.append(ns)
-                for i in range(len(new_states)):
-                    if new_states[i]:
-                        dfa_delta[(tuple(states), T_states[i])] = new_states[i]
+                for q in states:
+                    if (q, s) in self.delta:
+                        new_states += self.delta[(q, s)]
+                new_states = list(set(new_states))
 
-        return D_FiniteAutomaton(dfa_Q, self.Sigma, self.q0, dfa_F, dfa_delta)
+                if new_states:
+                    dfa_delta[(tuple(states), s)] = new_states
+                    if new_states not in dfa_Q:
+                        dfa_Q.append(new_states)
 
-    def show_graph(self):
-        graph = nx.DiGraph()
-        graph.add_nodes_from(self.Q)
+        for states in dfa_Q:
+            for q in states:
+                if q in self.F:
+                    dfa_F.append(states)
+                    break
 
-        for t in self.delta:
-            for s in self.delta[t]:
-                graph.add_edge(t[0], s, label=t[1])
+        return D_FiniteAutomaton(dfa_Q, self.Sigma, [self.q0], dfa_F, dfa_delta)
 
-        pos = nx.spring_layout(graph)
-        nx.draw_networkx_nodes(graph, pos)
-        nx.draw_networkx_edges(graph, pos)
-        nx.draw_networkx_labels(graph, pos)
-        nx.draw_networkx_edge_labels(graph, pos)
+    def draw_graph(self):
+        dot = Digraph()
 
-        plt.show()
+        # add nodes
+        for q in self.Q:
+            dot.node(str(q))
+
+        # add initial state
+        dot.attr('node', shape='none')
+        dot.edge('', str(self.q0))
+
+        # add final states
+        dot.attr('node', shape='doublecircle')
+        for q in self.F:
+            dot.node(str(q))
+
+        # add transitions
+        dot.attr('node', shape='circle')
+        dot.attr('edge', arrowhead='none')
+        for (q, a), qs in self.delta.items():
+            for q_ in qs:
+                dot.edge(str(q), str(q_), label=a)
+
+        return dot
