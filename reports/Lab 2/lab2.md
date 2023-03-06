@@ -2,6 +2,7 @@
 
 ### Course: Formal Languages & Finite Automata
 ### Author: Bardier Andrei
+### Variant: 3
 
 ----
 
