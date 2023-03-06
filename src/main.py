@@ -53,6 +53,7 @@ if __name__ == "__main__":
     # NFA to DFA conversion
     dfa = automaton.nfa2dfa()
     print('________NFA to DFA conversion________')
+    print("Type of the automaton is", dfa.type_automaton())
     print('Q =', dfa.Q)
     print('Sigma =', dfa.Sigma)
     print('Delta =')

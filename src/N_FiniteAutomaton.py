@@ -40,10 +40,22 @@ class N_FiniteAutomaton:
         return Grammar(self.Q, self.Sigma, production, self.q0)
 
     def type_automaton(self):
-        for item in self.delta.values():
-            if len(item) > 1:
-                return 'NFA'
-        return 'DFA'
+        is_deterministic = True
+
+        # Check if there is more than one transition from a state with the same symbol
+        for q in self.Q:
+            transitions = {}
+            for (state, symbol), next_states in self.delta.items():
+                if state == q:
+                    if symbol in transitions:
+                        is_deterministic = False
+                        break
+                    else:
+                        transitions[symbol] = next_states
+        if is_deterministic:
+            return "NFA"
+        else:
+            return "DFA"
 
     def nfa2dfa(self):
         dfa_F = []
