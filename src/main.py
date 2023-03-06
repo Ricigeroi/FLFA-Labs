@@ -62,15 +62,9 @@ if __name__ == "__main__":
     print('F =', dfa.F)
     print('___________________________________')
 
-    nfa = N_FiniteAutomaton(
-        Q={0, 1, 2},
-        Sigma={'a', 'b'},
-        q0=0,
-        delta={(0, 'a'): {1}, (1, 'a'): {1, 2}, (1, 'b'): {2}},
-        F={2}
-    )
+    # Graphical representation of the NFA
+    automaton.draw_graph().view()
 
-    nfa.draw_graph().view()
 
 
 

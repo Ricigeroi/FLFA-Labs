@@ -80,7 +80,7 @@ class N_FiniteAutomaton:
 
         # add initial state
         dot.attr('node', shape='none')
-        dot.edge('', str(self.q0))
+        dot.edge('', str(self.q0), arrowhead='normal')
 
         # add final states
         dot.attr('node', shape='doublecircle')
@@ -89,7 +89,7 @@ class N_FiniteAutomaton:
 
         # add transitions
         dot.attr('node', shape='circle')
-        dot.attr('edge', arrowhead='none')
+        dot.attr('edge', arrowhead='normal')
         for (q, a), qs in self.delta.items():
             for q_ in qs:
                 dot.edge(str(q), str(q_), label=a)

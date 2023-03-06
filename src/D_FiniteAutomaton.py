@@ -1,3 +1,5 @@
+from graphviz import Digraph
+
 class D_FiniteAutomaton:
     def __init__(self, Q, Sigma, q0, F, delta):
         self.Q = Q
@@ -42,3 +44,29 @@ class D_FiniteAutomaton:
             if len(item) > 1:
                 return 'NFA'
         return 'DFA'
+
+    def draw_graph(self):
+        dot = Digraph()
+
+        # add nodes
+        for q in self.Q:
+            dot.node(str(q))
+
+        # add initial state
+        dot.attr('node', shape='none')
+        dot.edge('', str(self.q0), arrowhead='normal')
+
+        # add final states
+        dot.attr('node', shape='doublecircle')
+        for q in self.F:
+            dot.node(str(q))
+
+        # add transitions
+        dot.attr('node', shape='circle')
+        dot.attr('edge', arrowhead='normal')
+        for (q, a), qs in self.delta.items():
+            for q_ in qs:
+                dot.edge(str(q), str(q_), label=a)
+
+        return dot
+
