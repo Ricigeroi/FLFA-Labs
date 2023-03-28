@@ -1,8 +1,10 @@
 from Grammar import Grammar
+from Lexer import Lexer
 from N_FiniteAutomaton import N_FiniteAutomaton
 
 
-if __name__ == "__main__":
+# Lab 1 and lab 2 code
+def lab_1_2():
     # Lab 1 data
     Vn = ["S", "D", "R"]
     Vt = ["a", "b", "c", "d", "f"]
@@ -14,8 +16,7 @@ if __name__ == "__main__":
     S = "S"
 
     grammar = Grammar(Vn, Vt, P, S)
-    # print(grammar.to_finite_automaton())
-
+    print(grammar.to_finite_automaton())
     # Lab 2 #
     ################################################################
     Q = ('q0', 'q1', 'q2', 'q3', 'q4')
@@ -64,9 +65,22 @@ if __name__ == "__main__":
     print('___________________________________')
 
     # Graphical representation of the NFA
-    automaton.draw_graph().view()
+    # automaton.draw_graph().view()
 
 
+if __name__ == "__main__":
+    # Call lab 1 and 2 functions
+    # lab_1_2()
 
+    ################################################################
+    # LAB 3 #
 
+    input_string = str(input("Enter string: "))
+    # Create a lexer instance with some sample input
+    lexer = Lexer(input_string)
 
+    # Get tokens until end of input
+    token = lexer.get_next_token()
+    while token is not None:
+        print(token)
+        token = lexer.get_next_token()
