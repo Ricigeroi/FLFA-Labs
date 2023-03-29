@@ -1,15 +1,16 @@
 import re
 
-# Define token types
+# Define the different token types along with their regex patterns
 TOKEN_TYPES = [
-    ('NUMBER', r'\d+'),
+    ('NUMBER', r'\d+(\.\d+)?'),  # Matches integers and float numbers
     ('PLUS', r'\+'),
     ('MINUS', r'-'),
     ('MULTIPLIER', r'\*'),
     ('DIVIDE', r'/'),
+    ('POWER', r'\^'),
     ('LEFT_BRACKET', r'\('),
     ('RIGHT_BRACKET', r'\)'),
-    ('VARIABLE', r'[a-zA-Z_]\w*'),
+    ('VARIABLE', r'[a-zA-Z_]\w*'),  # Matches valid variable names
     ('EQUAL', r'=')
 ]
 
@@ -57,5 +58,8 @@ class Lexer:
                 # Return the token
                 return token
 
-        # If no match, raise an exception
-        raise Exception(f'Invalid character: {self.current_char}')
+        # If no match, print an error message and return None
+        print(f'Invalid character: {self.current_char}')
+        self.advance()
+        return None
+
