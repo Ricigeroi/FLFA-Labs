@@ -11,7 +11,25 @@ TOKEN_TYPES = [
     ('LEFT_BRACKET', r'\('),
     ('RIGHT_BRACKET', r'\)'),
     ('VARIABLE', r'[a-zA-Z_]\w*'),  # Matches valid variable names
-    ('EQUAL', r'=')
+    ('EQUAL', r'='),
+    ('COMMA', r','),
+    ('COLON', r':'),
+    ('SEMICOLON', r';'),
+    ('MODULO', r'%'),
+    ('LESS_THAN', r'<'),
+    ('GREATER_THAN', r'>'),
+    ('NOT_EQUAL', r'!='),
+    ('AND', r'&&'),
+    ('OR', r'\|\|'),
+    ('NOT', r'!'),
+    ('IF', r'if'),
+    ('ELSE', r'else'),
+    ('WHILE', r'while'),
+    ('FOR', r'for'),
+    ('FUNCTION', r'function'),
+    ('RETURN', r'return'),
+    ('BEGIN', r'{'),
+    ('END', r'}'),
 ]
 
 
