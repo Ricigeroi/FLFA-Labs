@@ -66,15 +66,8 @@ def lab_1_2():
 
     # Graphical representation of the NFA
     # automaton.draw_graph().view()
-
-
-if __name__ == "__main__":
-    # Call lab 1 and 2 functions
-    # lab_1_2()
-
-    ################################################################
-    # LAB 3 #
-
+# Lab 3 code
+def lab_3():
     input_string = str(input("Enter string: "))
     # Create a lexer instance with some sample input
     lexer = Lexer(input_string)
@@ -84,3 +77,30 @@ if __name__ == "__main__":
     while token is not None:
         print(token)
         token = lexer.get_next_token()
+
+
+if __name__ == "__main__":
+    # Call lab 1 and 2 functions
+    # lab_1_2()
+    # Call lab 3 functions
+    # lab_3()
+    #############################
+    # LAB 4 #
+
+    Vn = ["S", "A", "B", "C", "E"]
+    Vt = ["a", "d"]
+    P = {
+        "S": ["dB", "A"],
+        "A": ["d", "dS", "aAdAB"],
+        "B": ["aC", "aS", "AC"],
+        "C": [""],
+        "E": ["AS"]
+    }
+    S = "S"
+
+    grammar = Grammar(Vn, Vt, P, S)
+
+
+
+
+
