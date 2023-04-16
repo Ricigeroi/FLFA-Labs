@@ -1,4 +1,5 @@
 import random
+
 from D_FiniteAutomaton import D_FiniteAutomaton
 
 
@@ -99,6 +100,7 @@ class Grammar:
                 to_delete.append(i)
         for item in to_delete:
             production.pop(item)
+            self.non_terminal_vars.remove(item)
 
         # simplify productions (ex: [A -> aB, B -> epsilon] ==> [A -> a])
         for item in Ne:
@@ -139,6 +141,7 @@ class Grammar:
 
         for item in unreached:
             self.production.pop(item)
+            self.non_terminal_vars.remove(item)
 
         print('Inaccessible symbols =', unreached)
         print("\nP\"\" =", self.production)
@@ -153,6 +156,79 @@ class Grammar:
             P.S.: Thank God for this!
         """
         pass
+
+    def convert_to_normal_form(self):
+        """
+        Method to convert a grammar to Chomsky normal form.
+        A -> BC
+        D -> i
+        """
+        # START: Eliminate the start symbol from right-hand sides
+        print(' ' * 50, "Chomsky normal form:")
+        self.non_terminal_vars.append('S0')
+        dict = {'S0': ['S']}
+        self.production = {**dict, **self.production}
+
+
+        # TERM: Eliminate rules with nonsolitary terminals
+        new_production = {}
+        dict = {}
+        counter = 0
+        for prod in self.production:
+            for rule in self.production[prod]:
+                if len(rule) > 1:
+                    for char in rule:
+                        if char in self.terminal_vars and char not in new_production.values():
+                            new_production[chr(70 + counter)] = char
+                            dict[char] = chr(70 + counter)
+                            counter += 1
+
+        # Replacing terminals symbols with their new non-terminal symbol (ex: [S -> dB] ==> [F -> d] and [S -> FB])
+        for item in dict.keys():
+            for prod in self.production:
+                for i in range(len(self.production[prod])):
+                    if len(self.production[prod][i]) > 1:
+                        self.production[prod][i] = self.production[prod][i].replace(item, dict[item])
+
+        # BIN: Eliminate right-hand sides with more than 2 nonterminals
+        print("New productions:\n", new_production, sep='')
+        self.production = {**self.production, **new_production}
+        counter = 1
+        new_production = {}
+        for prod in self.production:
+            for rule in self.production[prod]:
+                if len(rule) > 2:
+                    print(prod, '->', 'X1X2')
+                    new_production[prod] = 'X1X2'
+
+        prod = list(self.production.keys())[1]
+        for rule in self.production[prod]:
+            if len(rule) > 2:
+                while len(rule) > 2:
+                    new_production[('X' + str(counter))] = rule[:2]
+                    print(('X' + str(counter)), '->', rule[:2])
+                    counter += 1
+                    if len(rule[2:]) > 2:
+                        new_production[('X' + str(counter))] = ('X' + str(counter + 1)) + rule[-1]
+                        print(('X' + str(counter)), '->', ('X' + str(counter + 1)) + rule[-1])
+                        counter += 1
+                    rule = rule[2:]
+
+        for prod in self.production:
+            for rule in self.production[prod]:
+                if len(rule) > 2:
+                    self.production[prod].remove(rule)
+
+
+
+        for prod in new_production:
+            if prod in self.production:
+                self.production[prod].append(new_production[prod])
+            else:
+                self.production[prod] = new_production[prod]
+
+        print("\nP normal =", self.production)
+        print('=' * 128)
 
 
 def count_case_changes(s):

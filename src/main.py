@@ -109,5 +109,7 @@ if __name__ == "__main__":
 
     grammar.eliminate_unreachable()
 
+    grammar.convert_to_normal_form()
+
 
 
