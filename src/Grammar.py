@@ -82,21 +82,77 @@ class Grammar:
 
     # method to eliminate the e-transition (just in my particular case)
     def eliminate_e(self):
+        print(' ' * 48, "Eliminating e-transitions:")
         production = self.production.copy()
         Ne = []
         for prod in production:
             if '' in production[prod]:
                 Ne.append(prod)
 
-                # eliminating e-transition from P
+                # eliminate e-transition from P
                 production[prod].remove('')
 
+        # delete empty transitions
+        to_delete = []
+        for i in production.keys():
+            if not production[i]:
+                to_delete.append(i)
+        for item in to_delete:
+            production.pop(item)
+
+        # simplify productions (ex: [A -> aB, B -> epsilon] ==> [A -> a])
         for item in Ne:
+            print(item, '->', 'epsilon')
             for prod in production:
                 for i in range(len(production[prod])):
                     production[prod][i] = production[prod][i].replace(item, '')
-        print(production)
+        self.production = production
+        print("\nP' =", self.production)
+        print('=' * 128)
 
+    # method to eliminate renaming
+    def eliminate_rename(self):
+        print(' ' * 50, "Eliminating renaming:")
+        for prod in self.production:
+            for rule in self.production[prod]:
+                if rule in self.non_terminal_vars:
+                    print(prod, '->', rule)
+                    self.production[prod].remove(rule)
+                    self.production[prod].extend(self.production[rule])
+        print("\nP\" =", self.production)
+        print('=' * 128)
+
+    # method to eliminate inaccessible symbols
+    def eliminate_unreachable(self):
+        print(' ' * 50, "Unreachable symbols:")
+        reached = set()
+        for var in self.non_terminal_vars:
+            for prod in self.production:
+                for rule in self.production[prod]:
+                    if var in rule:
+                        reached.add(var)
+
+        unreached = []
+        for item in list(self.production.keys()):
+            if item not in reached:
+                unreached.append(item)
+
+        for item in unreached:
+            self.production.pop(item)
+
+        print('Inaccessible symbols =', unreached)
+        print("\nP\"\" =", self.production)
+        print('=' * 128)
+
+    # method to eliminate nonproductive symbols
+    def eliminate_nonproductive(self):
+        """
+            There is no need to implement this method since my case doesn't have any
+            nonproductive symbols to eliminate
+
+            P.S.: Thank God for this!
+        """
+        pass
 
 
 def count_case_changes(s):

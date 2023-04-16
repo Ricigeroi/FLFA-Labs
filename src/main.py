@@ -99,10 +99,15 @@ if __name__ == "__main__":
     S = "S"
 
     grammar = Grammar(Vn, Vt, P, S)
+    print('\n\n', ' ' * 50, 'Original productions:\n')
+    print('P =', P)
+    print('=' * 128)
 
     grammar.eliminate_e()
 
+    grammar.eliminate_rename()
 
+    grammar.eliminate_unreachable()
 
 
 
