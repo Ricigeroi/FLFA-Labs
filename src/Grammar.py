@@ -80,6 +80,25 @@ class Grammar:
                         flag[0] = 1
         return "Type " + str(flag.index(1))
 
+    # method to eliminate the e-transition (just in my particular case)
+    def eliminate_e(self):
+        production = self.production.copy()
+        Ne = []
+        for prod in production:
+            if '' in production[prod]:
+                Ne.append(prod)
+
+                # eliminating e-transition from P
+                production[prod].remove('')
+
+        for item in Ne:
+            for prod in production:
+                for i in range(len(production[prod])):
+                    production[prod][i] = production[prod][i].replace(item, '')
+        print(production)
+
+
+
 def count_case_changes(s):
     count = 0
     previous_case = None

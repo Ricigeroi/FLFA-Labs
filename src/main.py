@@ -100,6 +100,8 @@ if __name__ == "__main__":
 
     grammar = Grammar(Vn, Vt, P, S)
 
+    grammar.eliminate_e()
+
 
 
 
