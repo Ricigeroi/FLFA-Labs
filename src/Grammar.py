@@ -1,5 +1,4 @@
 import random
-
 from D_FiniteAutomaton import D_FiniteAutomaton
 
 
@@ -169,7 +168,6 @@ class Grammar:
         dict = {'S0': ['S']}
         self.production = {**dict, **self.production}
 
-
         # TERM: Eliminate rules with nonsolitary terminals
         new_production = {}
         dict = {}
@@ -218,8 +216,6 @@ class Grammar:
             for rule in self.production[prod]:
                 if len(rule) > 2:
                     self.production[prod].remove(rule)
-
-
 
         for prod in new_production:
             if prod in self.production:
