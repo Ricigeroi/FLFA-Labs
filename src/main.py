@@ -1,6 +1,8 @@
 from Grammar import Grammar
 from Lexer import Lexer
 from N_FiniteAutomaton import N_FiniteAutomaton
+from Parser import Parser
+import json
 
 
 # Lab 1 and lab 2 code
@@ -66,6 +68,8 @@ def lab_1_2():
 
     # Graphical representation of the NFA
     # automaton.draw_graph().view()
+
+
 # Lab 3 code
 def lab_3():
     input_string = str(input("Enter string: "))
@@ -79,14 +83,8 @@ def lab_3():
         token = lexer.get_next_token()
 
 
-if __name__ == "__main__":
-    # Call lab 1 and 2 functions
-    # lab_1_2()
-    # Call lab 3 functions
-    # lab_3()
-    #############################
-    # LAB 4 #
-
+# Lab 4 code
+def lab_4():
     Vn = ["S", "A", "B", "C", "E"]
     Vt = ["a", "d"]
     P = {
@@ -112,4 +110,20 @@ if __name__ == "__main__":
     grammar.convert_to_normal_form()
 
 
+if __name__ == "__main__":
+    # Call lab 1 and 2 functions
+    # lab_1_2()
+    # Call lab 3 functions
+    # lab_3()
+    # Call lab 4 functions
+    # lab_4()
+    #############################
+    # LAB 5 #
 
+    text = "2 + (2 + 3)"
+
+    lexer = Lexer(text)
+    parser = Parser(lexer)
+    ast = parser.parse()
+    json_output = json.dumps(ast)
+    print(json_output)
