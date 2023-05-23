@@ -175,8 +175,6 @@ Output:
     }
   }
 }
-
-Process finished with exit code 0
 ```
 
 Input:
@@ -208,8 +206,6 @@ Output:
       }
   }
 }
-
-Process finished with exit code 0
 ```
 Input:
 ```
@@ -288,8 +284,6 @@ Output:
     }
   }
 }
-
-Process finished with exit code 0
 ```
 
 ## Conclusions / Screenshots / Results
