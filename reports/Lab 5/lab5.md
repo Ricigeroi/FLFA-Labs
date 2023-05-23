@@ -164,8 +164,7 @@ Output:
     "type": "PLUS", 
     "left": 
     {
-      "type": 
-      "NUMBER", 
+      "type": "NUMBER", 
       "value": "2"
     }, 
     "right": 
@@ -242,7 +241,7 @@ Input:
 3 * (a / b) + 2 * c"
 ```
 Output:
-```
+```json
 "C:/Users/andre/OneDrive/Рабочий стол/FLFA-Labs/src/main.py"
 {
   "type": "PLUS", 
