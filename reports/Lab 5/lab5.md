@@ -150,7 +150,7 @@ Input:
 2 + (2 + 3)
 ```
 Output:
-```
+```json
 "C:/Users/andre/OneDrive/Рабочий стол/FLFA-Labs/src/main.py"
 {
   "type": "PLUS", 
@@ -184,7 +184,7 @@ Input:
 (2 + 2) * 2 / 3 - 4
 ```
 Output:
-```
+```json
 "C:/Users/andre/OneDrive/Рабочий стол/FLFA-Labs/src/main.py"
 {
   "type": "PLUS", 
@@ -219,7 +219,7 @@ if (a > b)
 }
 ```
 Output:
-```
+```json
 {
   "type": "IF",
     "condition": {
